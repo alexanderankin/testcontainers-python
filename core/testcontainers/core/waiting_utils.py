@@ -105,3 +105,11 @@ def wait_for_logs(container: "DockerContainer", predicate: Union[Callable, str],
             raise TimeoutError(f"Container did not emit logs satisfying predicate in {timeout:.3f} "
                                "seconds")
         time.sleep(interval)
+
+
+def wait_for_status(container: "DockerContainer", status: str = 'running') -> None:
+    start = time.time()
+    while config.TIMEOUT > time.time() - start:
+        if status == container.get_docker_client().status(container.get_wrapped_container().id):
+            break
+        time.sleep(config.SLEEP_TIME)

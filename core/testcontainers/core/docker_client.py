@@ -16,7 +16,7 @@ from docker.errors import NotFound
 from docker.models.containers import Container, ContainerCollection
 import functools as ft
 import os
-from typing import List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 import urllib
 
 from .utils import default_gateway_ip, inside_container, setup_logger
@@ -65,7 +65,7 @@ class DockerClient:
                                   'not available')
         return port_mappings[0]["HostPort"]
 
-    def get_container(self, container_id: str) -> Container:
+    def get_container(self, container_id: str) -> Dict[str, Any]:
         """
         Get the container with a given identifier.
         """
@@ -110,3 +110,10 @@ class DockerClient:
                 if ip_address:
                     return ip_address
         return "localhost"
+
+    def status(self, container_id: str) -> str:
+        """
+        Get the status of a container. (running, stopped, etc)
+        """
+        container = self.get_container(container_id)
+        return container['State']
