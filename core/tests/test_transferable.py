@@ -1,15 +1,14 @@
+from io import BytesIO
 from pathlib import Path
 from tarfile import open as tarfile_open, TarInfo
-from io import BytesIO
+from urllib.request import urlopen
 
 from testcontainers.core.container import DockerContainer
-from testcontainers.core.docker_client import DockerClient
-from testcontainers.core.transferable import *
-from testcontainers.core.waiting_utils import *
-from docker.models.containers import Container
+from testcontainers.core.transferable import StringTransferable
+from testcontainers.core.waiting_utils import wait_for_status
 
 
-def test_docker_custom_image():
+def test_basic_put_file_example():
     alpine = DockerContainer('alpine')
     alpine.with_command('sleep 1000000')
     alpine.start()
@@ -40,3 +39,15 @@ def test_docker_custom_image():
     put_file('/etc/stuff', 'content')
 
     print(alpine.exec('cat /etc/stuff'))
+
+
+def test_nginx_with_custom_index_html():
+    contents = '<h1>hello from transferable!</h1>'
+    container = DockerContainer('nginx')
+    container.with_exposed_ports(80)
+    container.with_copy_to_container(StringTransferable(contents), '/usr/share/nginx/html/index.html')
+    with container:
+        port = container.get_exposed_port(80)
+        with urlopen(f'http://localhost:{port}') as response:
+            actual = response.read().decode('utf-8')
+            assert contents == actual

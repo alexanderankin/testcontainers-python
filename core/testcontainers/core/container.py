@@ -1,10 +1,11 @@
 from docker.models.containers import Container
 import os
-from typing import Iterable, Optional, Tuple
+from typing import Any, Dict, Iterable, Optional, Tuple
 
-from .waiting_utils import wait_container_is_ready
+from .waiting_utils import wait_container_is_ready, wait_for_status
 from .docker_client import DockerClient
 from .exceptions import ContainerStartException
+from .transferable import Transferable
 from .utils import setup_logger, inside_container, is_arm
 
 logger = setup_logger(__name__)
@@ -32,6 +33,7 @@ class DockerContainer:
         self._command = None
         self._name = None
         self._kwargs = kwargs
+        self._copy_to_transferable_container_path_map: Dict[str, Transferable] = {}
 
     def with_env(self, key: str, value: str) -> 'DockerContainer':
         self.env[key] = value
@@ -41,9 +43,13 @@ class DockerContainer:
         self.ports[container] = host
         return self
 
-    def with_exposed_ports(self, *ports: Iterable[int]) -> 'DockerContainer':
+    def with_exposed_ports(self, *ports: int) -> 'DockerContainer':
         for port in ports:
             self.ports[port] = None
+        return self
+
+    def with_copy_to_container(self, transferable: Any, location: str) -> 'DockerContainer':
+        self._copy_to_transferable_container_path_map[location] = transferable
         return self
 
     def with_kwargs(self, **kwargs) -> 'DockerContainer':
@@ -63,7 +69,15 @@ class DockerContainer:
             name=self._name, volumes=self.volumes, **self._kwargs
         )
         logger.info("Container started: %s", self._container.short_id)
+        self._copy_transferables()
         return self
+
+    def _copy_transferables(self) -> None:
+        if not self._copy_to_transferable_container_path_map:
+            return
+        wait_for_status(self)
+        for location, transferable in self._copy_to_transferable_container_path_map.items():
+            transferable.transfer_to(self, location)
 
     def stop(self, force=True, delete_volume=True) -> None:
         self.get_wrapped_container().remove(force=force, v=delete_volume)
