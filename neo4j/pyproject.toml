@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "testcontainers-neo4j"
+version = "0.0.1rc2"
+description = "Neo4j component of testcontainers-python."
+license = "Apache-2.0"
+readme = "README.rst"
+homepage = "https://github.com/testcontainers/testcontainers-python"
+
+[tool.poetry.dependencies]
+testcontainers-core = "*"
+neo4j = "*"
+# python_requires=">=3.7",
+python = ">=3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
