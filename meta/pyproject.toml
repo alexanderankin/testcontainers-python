@@ -1,0 +1,74 @@
+#
+#    Licensed under the Apache License, Version 2.0 (the "License"); you may
+#    not use this file except in compliance with the License. You may obtain
+#    a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+#    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+#    License for the specific language governing permissions and limitations
+#    under the License.
+
+[tool.poetry]
+name = "testcontainers"
+version = "4.0.0rc1"
+description = "Python interface for throwaway instances of anything that can run in a Docker container."
+readme = "README.rst"
+homepage = "https://github.com/testcontainers/testcontainers-python"
+authors = ["Sergey Pirogov <automationremarks@gmail.com>"]
+license = "Apache-2.0"
+maintainers = [
+    "Kevin Wittek <kevin@wittek.dev>",
+    "Balint Bartha",
+    "David Ankin <daveankin@gmail.com>",
+]
+keywords = ["testing", "logging", "docker", "test automation"]
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: MacOS",
+]
+
+[tool.poetry.dependencies]
+testcontainers-core = "*"  # latest
+
+[tool.poetry.group]
+arangodb = { dependencies = { "testcontainers-arangodb" = "*" } }
+azurite = { dependencies = { "testcontainers-azurite" = "*" } }
+clickhouse = { dependencies = { "testcontainers-clickhouse" = "*" } }
+google-cloud-pubsub = { dependencies = { "testcontainers-gcp" = "*" } }
+gcp = { dependencies = { "testcontainers-gcp" = "*" } }
+kafka = { dependencies = { "testcontainers-kafka" = "*" } }
+keycloak = { dependencies = { "testcontainers-keycloak" = "*" } }
+minio = { dependencies = { "testcontainers-minio" = "*" } }
+mongo = { dependencies = { "testcontainers-mongo" = "*" } }
+mssqlserver = { dependencies = { "testcontainers-mssql" = "*" } }
+mysql = { dependencies = { "testcontainers-mysql" = "*" } }
+neo4j = { dependencies = { "testcontainers-neo4j" = "*" } }
+opensearch = { dependencies = { "testcontainers-opensearch" = "*" } }
+oracle = { dependencies = { "testcontainers-oracle" = "*" } }
+postgresql = { dependencies = { "testcontainers-postgres" = "*" } }
+rabbitmq = { dependencies = { "testcontainers-rabbitmq" = "*" } }
+redis = { dependencies = { "testcontainers-redis" = "*" } }
+selenium = { dependencies = { "testcontainers-selenium" = "*" } }
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

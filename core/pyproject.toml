@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "testcontainers-core"
+version = "0.0.1rc2"
+description = "Core component of testcontainers-python."
+license = "Apache-2.0"
+readme = "README.rst"
+homepage = "https://github.com/testcontainers/testcontainers-python"
+
+[tool.poetry.dependencies]
+docker = ">=4.0.0"
+# https://github.com/docker/docker-py/issues/3113#issuecomment-1533389349
+urllib3 = "<2.0"
+wrapt = "*"
+# python_requires=">=3.7",
+python = ">=3.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
