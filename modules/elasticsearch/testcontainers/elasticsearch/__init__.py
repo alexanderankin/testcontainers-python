@@ -12,7 +12,7 @@
 #    under the License.
 import logging
 import re
-import urllib
+import urllib.request
 from typing import Dict
 from urllib.error import URLError
 
@@ -68,7 +68,7 @@ class ElasticSearchContainer(DockerContainer):
             >>> import urllib
             >>> from testcontainers.elasticsearch import ElasticSearchContainer
 
-            >>> with ElasticSearchContainer(f'elasticsearch:8.3.3') as es:
+            >>> with ElasticSearchContainer(f'elasticsearch:8.3.3', mem_limit='3G') as es:
             ...    resp = urllib.request.urlopen(es.get_url())
             ...    json.loads(resp.read().decode())['version']['number']
             '8.3.3'

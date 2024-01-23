@@ -14,28 +14,27 @@ testcontainers-python facilitates the use of Docker containers for functional an
 
 .. toctree::
 
-    core/README
-    arangodb/README
-    azurite/README
-    clickhouse/README
-    elasticsearch/README
-    google/README
-    kafka/README
-    keycloak/README
-    localstack/README
-    minio/README
-    mongodb/README
-    mssql/README
-    mysql/README
-    neo4j/README
-    nginx/README
-    opensearch/README
-    oracle/README
-    postgres/README
-    rabbitmq/README
-    redis/README
-    selenium/README
-    k3s/README
+    modules/arangodb/README.rst
+    modules/azurite/README.rst
+    modules/clickhouse/README.rst
+    modules/elasticsearch/README.rst
+    modules/google/README.rst
+    modules/kafka/README.rst
+    modules/keycloak/README.rst
+    modules/localstack/README.rst
+    modules/minio/README.rst
+    modules/mongodb/README.rst
+    modules/mssql/README.rst
+    modules/mysql/README.rst
+    modules/neo4j/README.rst
+    modules/nginx/README.rst
+    modules/opensearch/README.rst
+    modules/oracle/README.rst
+    modules/postgres/README.rst
+    modules/rabbitmq/README.rst
+    modules/redis/README.rst
+    modules/selenium/README.rst
+    modules/k3s/README.rst
 
 Getting Started
 ---------------
@@ -47,8 +46,9 @@ Getting Started
 
     >>> with PostgresContainer("postgres:9.5") as postgres:
     ...     engine = sqlalchemy.create_engine(postgres.get_connection_url())
-    ...     result = engine.execute("select version()")
-    ...     version, = result.fetchone()
+    ...     with engine.begin() as connection:
+    ...         result = connection.execute(sqlalchemy.text("select version()"))
+    ...         version, = result.fetchone()
     >>> version
     'PostgreSQL 9.5...'
 
