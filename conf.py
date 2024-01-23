@@ -49,8 +49,8 @@ templates_path = ['_templates']
 # source_suffix = ['.rst', '.md']
 source_suffix = '.rst'
 
-# The master toctree document.
-master_doc = 'SPHINX_README'
+# The root toctree document.
+root_doc = 'index'
 
 # General information about the project.
 project = u'testcontainers'
@@ -134,7 +134,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'testcontainers.tex', u'testcontainers Documentation',
+    (root_doc, 'testcontainers.tex', u'testcontainers Documentation',
      u'Sergey Pirogov', 'manual'),
 ]
 
@@ -144,7 +144,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'testcontainers', u'testcontainers Documentation',
+    (root_doc, 'testcontainers', u'testcontainers Documentation',
      [author], 1)
 ]
 
@@ -155,7 +155,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'testcontainers', u'testcontainers Documentation',
+    (root_doc, 'testcontainers', u'testcontainers Documentation',
      author, 'testcontainers', 'One line description of project.',
      'Miscellaneous'),
 ]
