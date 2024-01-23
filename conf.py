@@ -50,7 +50,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The master toctree document.
-master_doc = 'README'
+master_doc = 'SPHINX_README'
 
 # General information about the project.
 project = u'testcontainers'

@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "testcontainers"
-version = "4.0.0"  # auto-incremented by release-please
+version = "4.0.0-rc2"  # auto-incremented by release-please
 description = "Python library for throwaway instances of anything that can run in a Docker container"
 authors = ["Sergey Pirogov <automationremarks@gmail.com>"]
 maintainers = [
     "Balint Bartha <totallyzen@users.noreply.github.com>",
     "David Ankin <daveankin@gmail.com>"
 ]
-readme = "README.rst"
+readme = "README.md"
 keywords = ["testing", "logging", "docker", "test automation"]
 classifiers = [
     "License :: OSI Approved :: Apache Software License",
