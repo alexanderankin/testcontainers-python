@@ -1,4 +1,5 @@
 import os
+from platform import system
 from typing import Iterable, Optional, Tuple
 
 from docker.models.containers import Container
@@ -103,6 +104,9 @@ class DockerContainer:
             if gateway_ip == host:
                 return self.get_docker_client().bridge_ip(self._container.id)
             return gateway_ip
+        # see https://github.com/testcontainers/testcontainers-python/issues/415
+        if host == "localnpipe" and "Windows" == system():
+            return "localhost"
         return host
 
     @wait_container_is_ready()
