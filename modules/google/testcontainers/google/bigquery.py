@@ -10,10 +10,10 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-from testcontainers.core.container import DockerContainer
-from google.cloud.bigquery import Client as BigQueryClient
 from google.api_core.client_options import ClientOptions
 from google.auth.credentials import AnonymousCredentials
+from google.cloud.bigquery import Client as BigQueryClient
+from testcontainers.core.container import DockerContainer
 
 
 class BigQueryContainer(DockerContainer):
@@ -37,19 +37,29 @@ class BigQueryContainer(DockerContainer):
             ...    result = client.query("SELECT 1", job_config=QueryJobConfig()).result()
             ...    print(result.total_rows)
     """
-    def __init__(self, image: str = "ghcr.io/goccy/bigquery-emulator:latest", project: str = "test-project",
-                 http_port: int = 9050, grpc_port: int = 9060, **kwargs) -> None:
-        super(BigQueryContainer, self).__init__(image=image, **kwargs)
+
+    def __init__(
+        self,
+        image: str = "ghcr.io/goccy/bigquery-emulator:latest",
+        project: str = "test-project",
+        http_port: int = 9050,
+        grpc_port: int = 9060,
+        **kwargs,
+    ) -> None:
+        super().__init__(image=image, **kwargs)
         self.project = project
         self.http_port = http_port
         self.grpc_port = grpc_port
         self.with_exposed_ports(http_port, grpc_port)
         command = [
-            "--project", project,
-            "--port", str(http_port),
-            "--grpc-port", str(grpc_port),
+            "--project",
+            project,
+            "--port",
+            str(http_port),
+            "--grpc-port",
+            str(grpc_port),
         ]
-        self.with_command(' '.join(command))
+        self.with_command(" ".join(command))
 
     def get_emulator_http_endpoint(self) -> str:
         return f"http://{self.get_container_host_ip()}:{self.get_exposed_port(self.http_port)}"
@@ -61,4 +71,3 @@ class BigQueryContainer(DockerContainer):
             client_options=client_options,
             credentials=AnonymousCredentials(),
         )
-
